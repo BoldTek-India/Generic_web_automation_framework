@@ -1,0 +1,7 @@
+selenium
+pytest
+pytest-html
+webdriver-manager
+requests
+python-dotenv
+faker
