@@ -4,4 +4,3 @@ pytest-html
 webdriver-manager
 requests
 python-dotenv
-faker
