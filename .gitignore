@@ -6,7 +6,6 @@
 
 # Python cache
 __pycache__/
-*.py[cod]
 
 # Virtual environment
 venv/
