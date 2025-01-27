@@ -30,17 +30,17 @@ class BasePage:
         if element:
             element.send_keys(value)
 
-    def login(self, email, password):
-        # Perform login using locators from Excel
-        self.send_keys("LoginPage", "Username Field", email)
-        self.send_keys("LoginPage", "Password Field", password)
-        self.click_element("LoginPage", "Login Button")
+    # def login(self, email, password):
+    #     # Perform login using locators from Excel
+    #     self.send_keys("LoginPage", "Username Field", email)
+    #     self.send_keys("LoginPage", "Password Field", password)
+    #     self.click_element("LoginPage", "Login Button")
 
-    def get_error_message(self):
-        # Retrieve error message from the login page
-        element = self.find_element("LoginPage", "Error Message")
-        return element.text if element else None
+    # def get_error_message(self):
+    #     # Retrieve error message from the login page
+    #     element = self.find_element("LoginPage", "Error Message")
+    #     return element.text if element else None
 
-    def is_logged_in(self):
-        # Check if the user is logged in by verifying the page title
-        return "Dashboard" in self.driver.title
+    # def is_logged_in(self):
+    #     # Check if the user is logged in by verifying the page title
+    #     return "Dashboard" in self.driver.title
