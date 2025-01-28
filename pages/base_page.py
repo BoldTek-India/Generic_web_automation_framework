@@ -28,6 +28,7 @@ class BasePage:
     def send_keys(self, page_name, element_name, value):
         element = self.find_element(page_name, element_name)
         if element:
+            element.clear()
             element.send_keys(value)
 
     # def login(self, email, password):
