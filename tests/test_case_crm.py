@@ -19,7 +19,7 @@ from pages.base_page import BasePage
 
 def test_invalid_password(driver):
     base_page = BasePage(driver)
-
+    print(f"Shared Driver Session ID: {driver.session_id}")
     # Login with invalid password
     base_page.send_keys("LoginPage", "Username Field", credentials["invalid_password"]["email"])
     base_page.send_keys("LoginPage", "Password Field", credentials["invalid_password"]["password"])
@@ -33,9 +33,9 @@ def test_invalid_password(driver):
     base_page.click_element(page_name="LoginPage", element_name="Error Close Message")
     print("Test Invalid Password: PASSED")
 
-def test_unregistered_account(driver):
-    base_page = BasePage(driver)
-
+def test_unregistered_account(standalone_driver):
+    print(f"Shared Driver Session ID: {standalone_driver.session_id}")
+    base_page = BasePage(standalone_driver)
     # Login with unregistered account
     base_page.send_keys("LoginPage", "Username Field", credentials["unregistered_account"]["email"])
     base_page.send_keys("LoginPage", "Password Field", credentials["unregistered_account"]["password"])
