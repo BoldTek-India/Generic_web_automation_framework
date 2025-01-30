@@ -7,6 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from resources.test_data import credentials
 from resources.test_data import signup_data
 from pages.base_page import BasePage
+from tests.conftest import standalone_driver
 
 
 # @pytest.fixture(scope="module")
@@ -16,10 +17,10 @@ from pages.base_page import BasePage
 #     driver.maximize_window()
 #     yield driver
 #     driver.quit()
-# Sign up first
 
-def test_01_signup_and_login(driver):
-    base_page = BasePage(driver)
+# Signup with Valid credential
+def test_01_signup(standalone_driver):
+    base_page = BasePage(standalone_driver)
 
     # Step 1: Signup with valid details
     print("Starting the signup process...")
@@ -30,19 +31,20 @@ def test_01_signup_and_login(driver):
     base_page.send_keys("SignupPage", "Email Field", signup_data["valid_details"]["random_email"])
     base_page.send_keys("SignupPage", "Phone Number Field", signup_data["valid_details"]["phone_number"])
     base_page.click_element("SignupPage", "Terms Checkbox")
+    base_page.scroll_to_element("SignupPage", "Signup Button")
     base_page.click_element("SignupPage", "Signup Button")
-
-    # Verify successful signup
     time.sleep(5)
     signup_message = base_page.find_element("SignupPage", "Success Message").text
-    assert signup_message == "Signup successful!", f"Unexpected signup message: {signup_message}"
+    assert signup_message == "Successfully registered. Please check your registered mail.", f"Unexpected signup message: {signup_message}"
     print("Signup completed successfully!")
+
+#Signup with failed signup attempt
+
 
 
 # login part
 def test_02_invalid_password(driver):
     base_page = BasePage(driver)
-    print(f"Shared Driver Session ID: {driver.session_id}")
     # Login with invalid password
     base_page.send_keys("LoginPage", "Username Field", credentials["invalid_password"]["email"])
     base_page.send_keys("LoginPage", "Password Field", credentials["invalid_password"]["password"])
@@ -56,9 +58,8 @@ def test_02_invalid_password(driver):
     base_page.click_element(page_name="LoginPage", element_name="Error Close Message")
     print("Test Invalid Password: PASSED")
 
-def test_unregistered_account(standalone_driver):
-    print(f"Shared Driver Session ID: {standalone_driver.session_id}")
-    base_page = BasePage(standalone_driver)
+def test_03_unregistered_account(driver):
+    base_page = BasePage(driver)
     # Login with unregistered account
     base_page.send_keys("LoginPage", "Username Field", credentials["unregistered_account"]["email"])
     base_page.send_keys("LoginPage", "Password Field", credentials["unregistered_account"]["password"])
@@ -73,7 +74,7 @@ def test_unregistered_account(standalone_driver):
     print("Test Unregistered Account: PASSED")
 
 
-def test_valid_credentials(driver):
+def test_04_valid_credentials(driver):
     base_page = BasePage(driver)
 
     # Login with valid credentials

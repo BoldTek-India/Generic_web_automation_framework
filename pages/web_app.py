@@ -6,7 +6,6 @@ class WebApp:
     def __init__(self, name, config):
         self.name = name
         self.config = config
-        self.driver = None
 
     # def initialize_driver(self):
     #     """Initialize the browser driver."""
