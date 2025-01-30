@@ -31,6 +31,12 @@ class BasePage:
             element.clear()
             element.send_keys(value)
 
+    def scroll_to_element(self, page_name, element_name):
+
+        element = self.find_element(page_name, element_name)
+        if element:
+            self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+
     # def login(self, email, password):
     #     # Perform login using locators from Excel
     #     self.send_keys("LoginPage", "Username Field", email)

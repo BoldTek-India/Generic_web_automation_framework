@@ -11,10 +11,11 @@ def driver():
     driver = Browser.get_driver(Config.BROWSER)
     driver.get(Config.BASE_URL)
     driver.implicitly_wait(Config.IMPLICIT_WAIT)
+    driver.maximize_window()
     yield driver
     driver.quit()
 
-@pytest.fixture
+@pytest.fixture(scope="function")
 def standalone_driver():
     """
     Fixture for standalone WebDriver instances for optional test cases.
@@ -23,5 +24,7 @@ def standalone_driver():
     driver = Browser.get_driver(Config.BROWSER)
     driver.get(Config.BASE_URL)
     driver.implicitly_wait(Config.IMPLICIT_WAIT)
+    driver.maximize_window()
+
     yield driver
     driver.quit()

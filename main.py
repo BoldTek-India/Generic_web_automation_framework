@@ -1,7 +1,6 @@
 from utils.config import Config
 from utils.browser import Browser
 from pages.base_page import BasePage
-from resources.test_data import credentials
 from pages.web_app import WebApp
 
 def main():
