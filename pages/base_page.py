@@ -17,7 +17,6 @@ class BasePage:
             return WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.ID, locator_value))
             )
-        # Add other locator types as needed
         return None
 
     def click_element(self, page_name, element_name):
@@ -36,18 +35,3 @@ class BasePage:
         element = self.find_element(page_name, element_name)
         if element:
             self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
-
-    # def login(self, email, password):
-    #     # Perform login using locators from Excel
-    #     self.send_keys("LoginPage", "Username Field", email)
-    #     self.send_keys("LoginPage", "Password Field", password)
-    #     self.click_element("LoginPage", "Login Button")
-
-    # def get_error_message(self):
-    #     # Retrieve error message from the login page
-    #     element = self.find_element("LoginPage", "Error Message")
-    #     return element.text if element else None
-
-    # def is_logged_in(self):
-    #     # Check if the user is logged in by verifying the page title
-    #     return "Dashboard" in self.driver.title

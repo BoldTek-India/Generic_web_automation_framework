@@ -1,22 +1,9 @@
 import time
-
-import pytest
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from resources.test_data import credentials
 from resources.test_data import signup_data
 from pages.base_page import BasePage
 from tests.conftest import standalone_driver
 
-
-# @pytest.fixture(scope="module")
-# def driver():
-#     # Setup WebDriver
-#     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-#     driver.maximize_window()
-#     yield driver
-#     driver.quit()
 
 # Signup with Valid credential
 def test_01_signup(standalone_driver):
@@ -39,14 +26,9 @@ def test_01_signup(standalone_driver):
     print("Signup completed successfully!")
 
 #Signup with failed signup attempt
-import pytest
-from pages.base_page import BasePage
-from resources.test_data import signup_data
-import time
-
-def test_invalid_phone_number_bug(driver):
+def test_invalid_phone_number_bug(standalone_driver):
 # Test to verify that the system allows invalid phone numbers (e.g., 2 digits),which should not be allowed.
-    base_page = BasePage(driver)
+    base_page = BasePage(standalone_driver)
 
     # Step 1: Navigate to the Signup Page
     base_page.click_element("SignupPage", "Signup Link")
