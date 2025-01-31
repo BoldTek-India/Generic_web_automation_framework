@@ -39,11 +39,42 @@ def test_01_signup(standalone_driver):
     print("Signup completed successfully!")
 
 #Signup with failed signup attempt
+import pytest
+from pages.base_page import BasePage
+from resources.test_data import signup_data
+import time
 
+def test_invalid_phone_number_bug(driver):
+# Test to verify that the system allows invalid phone numbers (e.g., 2 digits),which should not be allowed.
+    base_page = BasePage(driver)
 
+    # Step 1: Navigate to the Signup Page
+    base_page.click_element("SignupPage", "Signup Link")
+
+    # Step 2: Fill Signup Form with Invalid Phone Number (2 digits)
+    base_page.send_keys("SignupPage", "Full Name Field", signup_data["invalid_phone"]["full_name"])
+    base_page.send_keys("SignupPage", "Company Name Field", signup_data["invalid_phone"]["company_name"])
+    base_page.send_keys("SignupPage", "Email Field", signup_data["invalid_phone"]["random_email"])
+    base_page.send_keys("SignupPage", "Phone Number Field", signup_data["invalid_phone"]["phone_number"])
+    base_page.click_element("SignupPage", "Terms Checkbox")
+
+    # Step 3: Scroll to Submit Button and Click
+    base_page.scroll_to_element("SignupPage", "Signup Button")
+    base_page.click_element("SignupPage", "Signup Button")
+
+    # Step 4: Verify Bug (Successful Submission Despite Invalid Phone Number)
+    time.sleep(5)
+    success_message_element = base_page.find_element("SignupPage", "Success Message")
+    if success_message_element:
+        success_message = success_message_element.text
+        # If submission is successful, the test fails intentionally to demonstrate the bug
+        assert False, f"Bug Detected: Invalid phone number was accepted. Message: {success_message}"
+    else:
+        # If the system rejects the invalid phone number, the test passes
+        print("Test passed: Invalid phone number was rejected.")
 
 # login part
-def test_02_invalid_password(driver):
+def test_03_invalid_password(driver):
     base_page = BasePage(driver)
     # Login with invalid password
     base_page.send_keys("LoginPage", "Username Field", credentials["invalid_password"]["email"])
@@ -58,7 +89,7 @@ def test_02_invalid_password(driver):
     base_page.click_element(page_name="LoginPage", element_name="Error Close Message")
     print("Test Invalid Password: PASSED")
 
-def test_03_unregistered_account(driver):
+def test_04_unregistered_account(driver):
     base_page = BasePage(driver)
     # Login with unregistered account
     base_page.send_keys("LoginPage", "Username Field", credentials["unregistered_account"]["email"])
@@ -73,8 +104,7 @@ def test_03_unregistered_account(driver):
     base_page.click_element(page_name="LoginPage", element_name="Error Close Message")
     print("Test Unregistered Account: PASSED")
 
-
-def test_04_valid_credentials(driver):
+def test_05_valid_credentials(driver):
     base_page = BasePage(driver)
 
     # Login with valid credentials

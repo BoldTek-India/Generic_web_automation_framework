@@ -33,10 +33,10 @@ signup_data = {
         "random_email": generate_random_email(),  # Using random email generation
         "phone_number": "9876543210"
     },
-    "missing_terms": {
+    "invalid_phone": {
         "full_name": "Nitumoni Sarma",
         "company_name": "BoldTek Pvt. Ltd.",
-        "random_email": generate_random_email(),  # Using random email generation
-        "phone_number": "9876543210"
+        "random_email": generate_random_email(),  # Using a wrong email to validate a test case
+        "phone_number": "123"
     }
 }
