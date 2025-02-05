@@ -3,6 +3,7 @@ from resources.test_data import credentials
 from resources.test_data import signup_data
 from pages.base_page import BasePage
 from tests.conftest import standalone_driver
+import pyautogui
 
 
 # Signup with Valid credential
@@ -25,9 +26,10 @@ def test_01_signup(standalone_driver):
     assert signup_message == "Successfully registered. Please check your registered mail.", f"Unexpected signup message: {signup_message}"
     print("Signup completed successfully!")
 
-#Signup with failed signup attempt
+# Signup with failed signup attempt
+
+
 def test_invalid_phone_number_bug(standalone_driver):
-# Test to verify that the system allows invalid phone numbers (e.g., 2 digits),which should not be allowed.
     base_page = BasePage(standalone_driver)
 
     # Step 1: Navigate to the Signup Page
@@ -86,6 +88,7 @@ def test_04_unregistered_account(driver):
     base_page.click_element(page_name="LoginPage", element_name="Error Close Message")
     print("Test Unregistered Account: PASSED")
 
+
 def test_05_valid_credentials(driver):
     base_page = BasePage(driver)
 
@@ -100,3 +103,29 @@ def test_05_valid_credentials(driver):
     success_message = driver.title
     assert success_message == "Home", f"Unexpected success message: {success_message}"
     print("Test Valid Account: PASSED & redirected to the dashboard")
+
+
+def test_06_import_leads(driver):
+    base_page = BasePage(driver)
+
+    # Step 2: Navigate to the Leads tab
+    base_page.click_element("DashboardPage", "Leads Tab")
+    time.sleep(4)
+
+    # Step 3: Click on Import Leads
+    base_page.click_element("LeadsPage", "Import Leads Button")
+    time.sleep(4)
+
+    # Step 4: Click on Browse Button
+    base_page.click_element("ImportLeadsPage", "Browse Button")
+    time.sleep(4)
+
+    # Step 5: Send file path to the file explorer dialog (if applicable)
+    file_path = "C:\\Lead_Data\\Lead_data.xlsx"
+    pyautogui.write(file_path)  # Type the file path in the file explorer window
+    pyautogui.press('enter')  # Press Enter to select the file
+    time.sleep(2)  # Wait for the file to be selected
+
+    # Step 6: Click on Next Button in CRMS UI after file is selected
+    base_page.click_element("ImportLeadsPage", "Next Button")
+    time.sleep(4)
