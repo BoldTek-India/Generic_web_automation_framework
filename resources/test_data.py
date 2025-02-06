@@ -1,5 +1,6 @@
 import random
 import string
+import os
 
 
 def generate_random_email():
@@ -40,3 +41,8 @@ signup_data = {
         "phone_number": "123"
     }
 }
+
+test_files = {
+    "import_leads_file": os.path.join("C:", "Lead_Data", "Lead_data.xlsx")
+}
+
