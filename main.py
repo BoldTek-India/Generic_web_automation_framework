@@ -1,9 +1,10 @@
-from config import Config
-from web_app import WebApp
+from utils.config import Config
+from pages.web_app import WebApp
 
 def main():
+
     # Specify the web app to test
-    web_app_name = Config.WEB_APP_NAME
+    web_app_name = Config.WEB_APP_NAME  # Fetch the web app name from config
 
     # Initialize the WebApp instance
     app_instance = WebApp(web_app_name, Config)
